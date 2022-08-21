@@ -11,6 +11,10 @@ public class UserDetailsHelper {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
+    public static String getUserToken() {
+        return getCurrentUser().getToken();
+    }
+
     public static String getCurrentUserFullName() {
         return getCurrentUser().getFirstName() + " " + getCurrentUser().getLastName();
     }

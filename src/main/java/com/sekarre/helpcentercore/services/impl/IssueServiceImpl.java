@@ -4,13 +4,13 @@ import com.sekarre.helpcentercore.DTO.*;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.domain.IssueType;
 import com.sekarre.helpcentercore.domain.User;
-import com.sekarre.helpcentercore.domain.enums.EventType;
 import com.sekarre.helpcentercore.domain.enums.IssueStatus;
 import com.sekarre.helpcentercore.domain.enums.RoleName;
 import com.sekarre.helpcentercore.exceptions.issue.IssueNotFoundException;
 import com.sekarre.helpcentercore.mappers.IssueMapper;
 import com.sekarre.helpcentercore.repositories.IssueRepository;
 import com.sekarre.helpcentercore.repositories.IssueTypeRepository;
+import com.sekarre.helpcentercore.services.ChatService;
 import com.sekarre.helpcentercore.services.CommentService;
 import com.sekarre.helpcentercore.services.IssueService;
 import com.sekarre.helpcentercore.services.UserService;
@@ -35,9 +35,9 @@ public class IssueServiceImpl implements IssueService {
     private final IssueRepository issueRepository;
     private final IssueTypeRepository issueTypeRepository;
     private final IssueMapper issueMapper;
-//    private final ChatService chatService;
     private final CommentService commentService;
     private final UserService userService;
+    private final ChatService chatService;
 //    private final EventEmitterService eventEmitterService;
 //    private final EventNotificationService eventNotificationService;
 
@@ -78,7 +78,7 @@ public class IssueServiceImpl implements IssueService {
         issue.addParticipant(supportUser);
         issue.setIssueType(getIssueTypeById(issueDTO.getIssueTypeId()));
         issue.setIssueStatus(IssueStatus.PENDING);
-//        issue.setChat(chatService.createNewChatWithUsers(issueDTO.getTitle(), List.of(getCurrentUser(), supportUser)));
+        issue.setChat(chatService.getChat(issueDTO, supportUser));
         Issue savedIssue = issueRepository.save(issue);
 //        eventEmitterService.sendNewEventMessage(
 //                EventType.ASSIGNED_TO_ISSUE, savedIssue.getId().toString(), new Long[]{supportUser.getId()});

@@ -29,6 +29,9 @@ public class User implements UserDetails, CredentialsContainer {
     private String lastName;
     private String email;
 
+    @Transient
+    private String token;
+
     @Builder.Default
     @ManyToMany
     @JoinTable(name = "Chat_User",

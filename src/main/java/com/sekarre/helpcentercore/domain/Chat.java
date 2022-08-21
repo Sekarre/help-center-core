@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(of = {"id", "channelId", "createdAt"})
+@EqualsAndHashCode(of = {"id", "channelId"})
 public class Chat {
 
     @Id
@@ -27,32 +27,4 @@ public class Chat {
 
     @NotBlank
     private String channelId;
-
-    @OneToOne(mappedBy = "chat", fetch = FetchType.LAZY)
-    private Issue issue;
-
-    @Builder.Default
-    @OneToMany(mappedBy = "chat")
-    private List<ChatMessage> chatMessages = new ArrayList<>();
-
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_user_id")
-    private User adminUser;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @Builder.Default
-    @ManyToMany
-    @JoinTable(name = "Chat_User",
-            joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users = new ArrayList<>();
-
-    public void addUser(User user) {
-        if (users.contains(user)) {
-            return;
-        }
-        this.users.add(user);
-    }
 }
