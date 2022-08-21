@@ -1,14 +1,9 @@
 package com.sekarre.helpcentercore.security.jwt;
 
-import com.sekarre.helpcentercore.domain.Role;
-import com.sekarre.helpcentercore.domain.User;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
