@@ -5,7 +5,7 @@ import com.sekarre.helpcentercore.DTO.issue.GroupedByStatusIssueDTO;
 import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
 import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
 import com.sekarre.helpcentercore.DTO.issue.IssueTypeDTO;
-import com.sekarre.helpcentercore.DTO.notification.NotificationDTO;
+import com.sekarre.helpcentercore.DTO.notification.NotificationQueueDTO;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.domain.IssueType;
 import com.sekarre.helpcentercore.domain.User;
@@ -90,8 +90,8 @@ public class IssueServiceImpl implements IssueService {
     }
 
     private void sendNotificationToSupportUser(User supportUser, Issue savedIssue) {
-        notificationSender.sendNotification(NotificationDTO.builder()
-                .eventType(EventType.ASSIGNED_TO_ISSUE)
+        notificationSender.sendNotification(NotificationQueueDTO.builder()
+                .eventType(EventType.ASSIGNED_TO_ISSUE.name())
                 .destinationId(String.valueOf(savedIssue.getId()))
                 .userId(supportUser.getId())
                 .build());

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sekarre.helpcentercore.domain.enums.EventType;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -15,13 +16,16 @@ import static com.sekarre.helpcentercore.util.DateUtil.DATE_TIME_FORMAT;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class NotificationDTO implements Serializable {
+public class NotificationQueueDTO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 2650647051596909952L;
 
     private Long id;
     private Long userId;
     private String message;
     private String destinationId;
-    private EventType eventType;
+    private String eventType;
 
     @JsonFormat(pattern = DATE_TIME_FORMAT)
     private LocalDateTime createdAt;

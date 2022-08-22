@@ -3,7 +3,7 @@ package com.sekarre.helpcentercore.services.impl;
 import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;
 import com.sekarre.helpcentercore.DTO.comment.CommentResponseDTO;
 import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
-import com.sekarre.helpcentercore.DTO.notification.NotificationDTO;
+import com.sekarre.helpcentercore.DTO.notification.NotificationQueueDTO;
 import com.sekarre.helpcentercore.domain.Comment;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.domain.enums.EventType;
@@ -15,7 +15,6 @@ import com.sekarre.helpcentercore.repositories.CommentRepository;
 import com.sekarre.helpcentercore.repositories.IssueRepository;
 import com.sekarre.helpcentercore.services.CommentService;
 import com.sekarre.helpcentercore.services.notification.NotificationSender;
-import com.sekarre.helpcentercore.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -73,8 +72,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private void sendNewCommentNotificationToUsers(Long issueId, List<Long> usersId) {
-        usersId.forEach(userId -> notificationSender.sendNotification(NotificationDTO.builder()
-                .eventType(EventType.NEW_ISSUE_COMMENT)
+        usersId.forEach(userId -> notificationSender.sendNotification(NotificationQueueDTO.builder()
+                .eventType(EventType.NEW_ISSUE_COMMENT.name())
                 .destinationId(String.valueOf(issueId))
                 .userId(userId)
                 .createdAt(getCurrentDateTime())
