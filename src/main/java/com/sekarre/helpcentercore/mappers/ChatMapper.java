@@ -1,6 +1,6 @@
 package com.sekarre.helpcentercore.mappers;
 
-import com.sekarre.helpcentercore.DTO.ChatInfoDTO;
+import com.sekarre.helpcentercore.DTO.chat.ChatInfoDTO;
 import com.sekarre.helpcentercore.domain.Chat;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;

@@ -1,13 +1,14 @@
 package com.sekarre.helpcentercore.exceptions.handler;
 
 import com.sekarre.helpcentercore.exceptions.AppRuntimeException;
-import com.sekarre.helpcentercore.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import static com.sekarre.helpcentercore.util.DateUtil.getCurrentDateTime;
 
 @Slf4j
 @ControllerAdvice
@@ -40,7 +41,7 @@ public class GlobalExceptionHandler {
     private ErrorMessage getCustomErrorMessage(String e) {
         return ErrorMessage.builder()
                 .cause(e)
-                .timestamp(DateUtil.getCurrentDateTime())
+                .timestamp(getCurrentDateTime())
                 .build();
     }
 }

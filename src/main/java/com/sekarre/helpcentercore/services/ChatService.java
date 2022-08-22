@@ -1,7 +1,6 @@
 package com.sekarre.helpcentercore.services;
 
-import com.sekarre.helpcentercore.DTO.ChatCreateRequestDTO;
-import com.sekarre.helpcentercore.DTO.IssueDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
 import com.sekarre.helpcentercore.domain.Chat;
 import com.sekarre.helpcentercore.domain.User;
 

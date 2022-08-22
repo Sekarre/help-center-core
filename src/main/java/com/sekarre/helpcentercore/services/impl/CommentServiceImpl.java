@@ -1,8 +1,9 @@
 package com.sekarre.helpcentercore.services.impl;
 
-import com.sekarre.helpcentercore.DTO.CommentCreateRequestDTO;
-import com.sekarre.helpcentercore.DTO.CommentResponseDTO;
-import com.sekarre.helpcentercore.DTO.IssueStatusChangeDTO;
+import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;
+import com.sekarre.helpcentercore.DTO.comment.CommentResponseDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
+import com.sekarre.helpcentercore.DTO.notification.NotificationDTO;
 import com.sekarre.helpcentercore.domain.Comment;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.domain.enums.EventType;
@@ -13,6 +14,8 @@ import com.sekarre.helpcentercore.mappers.CommentMapper;
 import com.sekarre.helpcentercore.repositories.CommentRepository;
 import com.sekarre.helpcentercore.repositories.IssueRepository;
 import com.sekarre.helpcentercore.services.CommentService;
+import com.sekarre.helpcentercore.services.notification.NotificationSender;
+import com.sekarre.helpcentercore.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 import static com.sekarre.helpcentercore.factories.StatusChangedCommentFactory.getStatusChangedComment;
 import static com.sekarre.helpcentercore.security.UserDetailsHelper.getCurrentUser;
 import static com.sekarre.helpcentercore.security.UserDetailsHelper.getCurrentUserFullName;
+import static com.sekarre.helpcentercore.util.DateUtil.getCurrentDateTime;
 
 
 @Slf4j
@@ -37,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
     private final IssueRepository issueRepository;
-//    private final EventEmitterService eventEmitterService;
+    private final NotificationSender notificationSender;
 
     @Override
     public List<CommentResponseDTO> getAllIssueComments(Long issueId) {
@@ -65,8 +69,16 @@ public class CommentServiceImpl implements CommentService {
         issue.getParticipants().stream()
                 .filter(user -> !user.getId().equals(getCurrentUser().getId()))
                 .forEach(user -> usersId.add(user.getId()));
-//        eventEmitterService.sendNewEventMessage(
-//                EventType.NEW_ISSUE_COMMENT, String.valueOf(issueId), usersId.toArray(Long[]::new));
+        sendNewCommentNotificationToUsers(issueId, usersId);
+    }
+
+    private void sendNewCommentNotificationToUsers(Long issueId, List<Long> usersId) {
+        usersId.forEach(userId -> notificationSender.sendNotification(NotificationDTO.builder()
+                .eventType(EventType.NEW_ISSUE_COMMENT)
+                .destinationId(String.valueOf(issueId))
+                .userId(userId)
+                .createdAt(getCurrentDateTime())
+                .build()));
     }
 
     @Override
@@ -78,7 +90,7 @@ public class CommentServiceImpl implements CommentService {
             senNewCommentEventMessage(issue.getId(), issue);
         }
         if (StringUtils.isNotBlank(issueStatusChangeDTO.getStatus())) {
-            Comment statusChangedComment =  getComment(issueStatusChangeDTO.getComment(), issue);
+            Comment statusChangedComment = getComment(issueStatusChangeDTO.getComment(), issue);
             IssueStatus issueStatus = IssueStatus.valueOf(issueStatusChangeDTO.getStatus());
             statusChangedComment.setContent(getStatusChangedComment(issueStatus));
             statusChangedComment.setIssueStatus(issueStatus);

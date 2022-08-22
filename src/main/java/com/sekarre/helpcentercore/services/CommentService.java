@@ -1,9 +1,9 @@
 package com.sekarre.helpcentercore.services;
 
 
-import com.sekarre.helpcentercore.DTO.CommentCreateRequestDTO;
-import com.sekarre.helpcentercore.DTO.CommentResponseDTO;
-import com.sekarre.helpcentercore.DTO.IssueStatusChangeDTO;
+import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;
+import com.sekarre.helpcentercore.DTO.comment.CommentResponseDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
 import com.sekarre.helpcentercore.domain.Issue;
 
 import java.util.List;

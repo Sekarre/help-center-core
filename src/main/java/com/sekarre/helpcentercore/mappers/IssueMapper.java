@@ -1,8 +1,8 @@
 package com.sekarre.helpcentercore.mappers;
 
-import com.sekarre.helpcentercore.DTO.IssueDTO;
-import com.sekarre.helpcentercore.DTO.IssueStatusChangeDTO;
-import com.sekarre.helpcentercore.DTO.IssueTypeDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueTypeDTO;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.domain.IssueType;
 import com.sekarre.helpcentercore.domain.enums.IssueStatus;

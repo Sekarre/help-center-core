@@ -1,5 +1,6 @@
-package com.sekarre.helpcentercore.DTO;
+package com.sekarre.helpcentercore.DTO.issue;
 
+import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

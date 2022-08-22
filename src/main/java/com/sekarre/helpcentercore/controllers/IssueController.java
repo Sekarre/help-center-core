@@ -1,6 +1,10 @@
 package com.sekarre.helpcentercore.controllers;
 
 import com.sekarre.helpcentercore.DTO.*;
+import com.sekarre.helpcentercore.DTO.issue.GroupedByStatusIssueDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueTypeDTO;
 import com.sekarre.helpcentercore.domain.enums.IssueStatus;
 import com.sekarre.helpcentercore.security.perms.IssuePermission;
 import com.sekarre.helpcentercore.services.IssueService;

@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.DTO;
+package com.sekarre.helpcentercore.DTO.chat;
 
 import lombok.*;
 
@@ -8,8 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Builder
-public class ChatCreateRequestDTO {
+public class ChatInfoDTO {
 
+    private Long id;
     private String channelName;
-    private Long[] usersId;
+    private String channelId;
 }

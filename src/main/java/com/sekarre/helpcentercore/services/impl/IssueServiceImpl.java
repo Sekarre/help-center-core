@@ -1,9 +1,15 @@
 package com.sekarre.helpcentercore.services.impl;
 
 import com.sekarre.helpcentercore.DTO.*;
+import com.sekarre.helpcentercore.DTO.issue.GroupedByStatusIssueDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueTypeDTO;
+import com.sekarre.helpcentercore.DTO.notification.NotificationDTO;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.domain.IssueType;
 import com.sekarre.helpcentercore.domain.User;
+import com.sekarre.helpcentercore.domain.enums.EventType;
 import com.sekarre.helpcentercore.domain.enums.IssueStatus;
 import com.sekarre.helpcentercore.domain.enums.RoleName;
 import com.sekarre.helpcentercore.exceptions.issue.IssueNotFoundException;
@@ -14,6 +20,7 @@ import com.sekarre.helpcentercore.services.ChatService;
 import com.sekarre.helpcentercore.services.CommentService;
 import com.sekarre.helpcentercore.services.IssueService;
 import com.sekarre.helpcentercore.services.UserService;
+import com.sekarre.helpcentercore.services.notification.NotificationSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,8 +45,7 @@ public class IssueServiceImpl implements IssueService {
     private final CommentService commentService;
     private final UserService userService;
     private final ChatService chatService;
-//    private final EventEmitterService eventEmitterService;
-//    private final EventNotificationService eventNotificationService;
+    private final NotificationSender notificationSender;
 
     @Override
     public List<IssueTypeDTO> getAllIssueTypes() {
@@ -80,8 +86,15 @@ public class IssueServiceImpl implements IssueService {
         issue.setIssueStatus(IssueStatus.PENDING);
         issue.setChat(chatService.getChat(issueDTO, supportUser));
         Issue savedIssue = issueRepository.save(issue);
-//        eventEmitterService.sendNewEventMessage(
-//                EventType.ASSIGNED_TO_ISSUE, savedIssue.getId().toString(), new Long[]{supportUser.getId()});
+        sendNotificationToSupportUser(supportUser, savedIssue);
+    }
+
+    private void sendNotificationToSupportUser(User supportUser, Issue savedIssue) {
+        notificationSender.sendNotification(NotificationDTO.builder()
+                .eventType(EventType.ASSIGNED_TO_ISSUE)
+                .destinationId(String.valueOf(savedIssue.getId()))
+                .userId(supportUser.getId())
+                .build());
     }
 
     @Override
@@ -144,12 +157,9 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public IssueDTO getIssueById(Long issueId) {
-        IssueDTO issueDTO = issueRepository.findById(issueId)
+        return issueRepository.findById(issueId)
                 .map(issueMapper::mapIssueToIssueDTO)
                 .orElseThrow(() -> new IssueNotFoundException("Issue with id: " + issueId + " not found"));
-//        eventNotificationService.markNotificationAsRead(
-//                issueId.toString(), EventType.ASSIGNED_TO_ISSUE, EventType.NEW_ISSUE, EventType.NEW_ISSUE_COMMENT);
-        return issueDTO;
     }
 
     @Override

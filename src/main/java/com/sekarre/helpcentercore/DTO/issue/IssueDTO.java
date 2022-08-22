@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.DTO;
+package com.sekarre.helpcentercore.DTO.issue;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sekarre.helpcentercore.domain.enums.IssueStatus;

@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.DTO;
+package com.sekarre.helpcentercore.DTO.comment;
 
 import lombok.*;
 

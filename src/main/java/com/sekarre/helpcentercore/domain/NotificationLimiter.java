@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EventNotificationLimiter {
+public class NotificationLimiter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

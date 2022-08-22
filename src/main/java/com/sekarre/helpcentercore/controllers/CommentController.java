@@ -1,7 +1,7 @@
 package com.sekarre.helpcentercore.controllers;
 
-import com.sekarre.helpcentercore.DTO.CommentCreateRequestDTO;
-import com.sekarre.helpcentercore.DTO.CommentResponseDTO;
+import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;
+import com.sekarre.helpcentercore.DTO.comment.CommentResponseDTO;
 import com.sekarre.helpcentercore.security.perms.CommentPermission;
 import com.sekarre.helpcentercore.services.CommentService;
 import lombok.RequiredArgsConstructor;

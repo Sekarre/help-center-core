@@ -2,6 +2,10 @@ package com.sekarre.helpcentercore.services;
 
 
 import com.sekarre.helpcentercore.DTO.*;
+import com.sekarre.helpcentercore.DTO.issue.GroupedByStatusIssueDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
+import com.sekarre.helpcentercore.DTO.issue.IssueTypeDTO;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.domain.enums.IssueStatus;
 
