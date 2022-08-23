@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 import static com.sekarre.helpcentercore.factories.StatusChangedCommentFactory.getStatusChangedComment;
 import static com.sekarre.helpcentercore.security.UserDetailsHelper.getCurrentUser;
 import static com.sekarre.helpcentercore.security.UserDetailsHelper.getCurrentUserFullName;
-import static com.sekarre.helpcentercore.util.DateUtil.getCurrentDateTime;
+import static com.sekarre.helpcentercore.util.DateUtil.getCurrentDateTimeFormatted;
 
 
 @Slf4j
@@ -76,7 +76,7 @@ public class CommentServiceImpl implements CommentService {
                 .eventType(EventType.NEW_ISSUE_COMMENT.name())
                 .destinationId(String.valueOf(issueId))
                 .userId(userId)
-                .createdAt(getCurrentDateTime())
+                .createdAt(getCurrentDateTimeFormatted())
                 .build()));
     }
 

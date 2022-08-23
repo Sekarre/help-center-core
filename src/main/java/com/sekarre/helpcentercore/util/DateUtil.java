@@ -1,6 +1,7 @@
 package com.sekarre.helpcentercore.util;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DateUtil {
 
@@ -8,5 +9,9 @@ public class DateUtil {
 
     public static LocalDateTime getCurrentDateTime() {
         return LocalDateTime.now();
+    }
+
+    public static String getCurrentDateTimeFormatted() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
     }
 }
