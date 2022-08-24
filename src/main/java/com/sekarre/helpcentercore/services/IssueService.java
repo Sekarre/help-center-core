@@ -36,4 +36,6 @@ public interface IssueService {
     IssueDTO getIssueById(Long issueId);
 
     Issue getIssueEntityById(Long issueId);
+
+    void deleteIssue(Long issueId);
 }

@@ -6,6 +6,7 @@ import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
 import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
 import com.sekarre.helpcentercore.DTO.issue.IssueTypeDTO;
 import com.sekarre.helpcentercore.domain.enums.IssueStatus;
+import com.sekarre.helpcentercore.security.perms.AdminPermission;
 import com.sekarre.helpcentercore.security.perms.IssuePermission;
 import com.sekarre.helpcentercore.services.IssueService;
 import lombok.RequiredArgsConstructor;
@@ -77,5 +78,12 @@ public class IssueController {
     @GetMapping("/{issueId}")
     public ResponseEntity<IssueDTO> getIssue(@PathVariable Long issueId) {
         return ResponseEntity.ok(issueService.getIssueById(issueId));
+    }
+
+    @AdminPermission
+    @DeleteMapping("/{issueId}")
+    public ResponseEntity<?> deleteIssue(@PathVariable Long issueId) {
+        issueService.deleteIssue(issueId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }

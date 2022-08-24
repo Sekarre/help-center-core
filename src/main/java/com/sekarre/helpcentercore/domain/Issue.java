@@ -43,7 +43,7 @@ public class Issue {
     private List<Comment> comments = new ArrayList<>();
 
     @JoinColumn(name = "chat_id")
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private Chat chat;
 
     @JoinColumn(name = "issue_type_id")

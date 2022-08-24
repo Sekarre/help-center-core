@@ -168,6 +168,11 @@ public class IssueServiceImpl implements IssueService {
                 .orElseThrow(() -> new IssueNotFoundException("Issue with id: " + issueId + " not found"));
     }
 
+    @Override
+    public void deleteIssue(Long issueId) {
+        issueRepository.deleteById(issueId);
+    }
+
     private IssueType getIssueTypeById(Long issueTypeId) {
         return issueTypeRepository.findById(issueTypeId)
                 .orElseThrow(() -> new IssueNotFoundException("IssueType with id: " + issueTypeId + " not found"));

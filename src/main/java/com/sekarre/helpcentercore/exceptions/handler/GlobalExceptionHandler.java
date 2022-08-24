@@ -1,6 +1,7 @@
 package com.sekarre.helpcentercore.exceptions.handler;
 
 import com.sekarre.helpcentercore.exceptions.AppRuntimeException;
+import com.sekarre.helpcentercore.exceptions.feign.FeignClientException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -15,13 +16,19 @@ import static com.sekarre.helpcentercore.util.DateUtil.getCurrentDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AppRuntimeException.class)
-    public ResponseEntity<ErrorMessage> handleChatNotFoundException(AppRuntimeException e) {
+    public ResponseEntity<ErrorMessage> handleAppRuntimeException(AppRuntimeException e) {
         log.error(e.getMessage());
         return ResponseEntity.ok(getCustomErrorMessage(e.getMessage()));
     }
 
     @ExceptionHandler(value = UsernameNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleAuthenticationException(UsernameNotFoundException e) {
+        log.error(e.getMessage());
+        return ResponseEntity.ok(getCustomErrorMessage(e.getMessage()));
+    }
+
+    @ExceptionHandler(value = FeignClientException.class)
+    public ResponseEntity<ErrorMessage> handleFeignClientException(FeignClientException e) {
         log.error(e.getMessage());
         return ResponseEntity.ok(getCustomErrorMessage(e.getMessage()));
     }
