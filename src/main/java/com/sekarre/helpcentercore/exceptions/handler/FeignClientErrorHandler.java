@@ -11,7 +11,7 @@ public class FeignClientErrorHandler implements ErrorDecoder {
     @Override
     public Exception decode(String key, Response response) {
         if (response.status() >= 400 && response.status() <= 499) {
-            return new FeignClientException("Error with feign client: " + response.reason());
+            return new FeignClientException("Error with feign client: " + response);
         }
         return errorDecoder.decode(key, response);
     }
