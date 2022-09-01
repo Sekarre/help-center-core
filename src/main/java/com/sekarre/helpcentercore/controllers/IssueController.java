@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.sekarre.helpcentercore.controllers.IssueController.BASE_ISSUE_URL;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = IssueController.BASE_ISSUE_URL)
+@RequestMapping(value = BASE_ISSUE_URL)
 public class IssueController {
 
     public static final String BASE_ISSUE_URL = "/api/v1/issues";

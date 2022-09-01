@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 
 import static com.sekarre.helpcentercore.security.UserDetailsHelper.getUserToken;
+import static com.sekarre.helpcentercore.security.jwt.JwtTokenFilter.BEARER;
 
 @Configuration
 public class FeignClientConfig {
@@ -18,7 +19,7 @@ public class FeignClientConfig {
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
             requestTemplate.header("Accept", ContentType.APPLICATION_JSON.getMimeType());
-            requestTemplate.header(HttpHeaders.AUTHORIZATION, "Bearer " + getUserToken());
+            requestTemplate.header(HttpHeaders.AUTHORIZATION, BEARER + getUserToken());
         };
     }
 

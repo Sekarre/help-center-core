@@ -20,7 +20,6 @@ public class RabbitQueueConfig {
         return new Queue(queueName, true);
     }
 
-
     @Bean
     public MappingJackson2HttpMessageConverter notificationJackson2HttpMessageConverter() {
         return new MappingJackson2HttpMessageConverter();

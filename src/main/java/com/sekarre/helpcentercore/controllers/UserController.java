@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.sekarre.helpcentercore.controllers.UserController.BASE_AUTH_URL;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = UserController.BASE_AUTH_URL)
+@RequestMapping(value = BASE_AUTH_URL)
 public class UserController {
 
     public static final String BASE_AUTH_URL = "/api/v1/users";
