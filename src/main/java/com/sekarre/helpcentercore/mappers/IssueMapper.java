@@ -1,11 +1,9 @@
 package com.sekarre.helpcentercore.mappers;
 
 import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
-import com.sekarre.helpcentercore.DTO.issue.IssueStatusChangeDTO;
 import com.sekarre.helpcentercore.DTO.issue.IssueTypeDTO;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.domain.IssueType;
-import com.sekarre.helpcentercore.domain.enums.IssueStatus;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,10 +12,6 @@ import org.mapstruct.Mapping;
 public abstract class IssueMapper {
 
     public abstract IssueTypeDTO mapIssueTypeToIssueTypeDTO(IssueType issueType);
-
-    public abstract IssueStatusChangeDTO mapIssueStatusToIssueStatusDTO(IssueStatus issueStatus);
-
-    public abstract IssueType mapIssueTypeDTOToIssueType(IssueTypeDTO issueTypeDTO);
 
     @Mapping(target = "issueTypeId", source = "issue.issueType.id")
     @Mapping(target = "channelId", source = "issue.chat.channelId")

@@ -17,10 +17,6 @@ public interface IssueService {
 
     List<String> getIssueStatuses();
 
-    IssueDTO getUserIssue();
-
-    List<IssueDTO> getAllUserIssues();
-
     void createNewIssue(IssueDTO issueDTO);
 
     void changeIssueStatus(Long issueId, IssueStatusChangeDTO issueStatusChangeDTO);

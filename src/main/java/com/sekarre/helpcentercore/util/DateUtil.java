@@ -14,4 +14,8 @@ public class DateUtil {
     public static String getCurrentDateTimeFormatted() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
     }
+
+    public static String getDateTimeFormatted(LocalDateTime toFormatDateTime) {
+        return toFormatDateTime.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
+    }
 }

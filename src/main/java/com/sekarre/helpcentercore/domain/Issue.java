@@ -18,6 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(of = {"id", "title", "issue", "issueStatus", "issueType"})
 public class Issue {
 
     @Id

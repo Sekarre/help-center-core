@@ -62,20 +62,6 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public IssueDTO getUserIssue() {
-        return issueRepository.findByAuthorId(getCurrentUser().getId())
-                .map(issueMapper::mapIssueToIssueDTO)
-                .orElse(null);
-    }
-
-    @Override
-    public List<IssueDTO> getAllUserIssues() {
-        return issueRepository.findAllByAuthorId(getCurrentUser().getId()).stream()
-                .map(issueMapper::mapIssueToIssueDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public void createNewIssue(IssueDTO issueDTO) {
         User supportUser = userService.getAvailableSupportUser();
         Issue issue = issueMapper.mapIssueDTOToIssue(issueDTO);

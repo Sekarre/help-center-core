@@ -11,6 +11,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class GroupedByStatusIssueDTO {
 
     private List<IssueDTO> pendingIssues = new ArrayList<>();

@@ -15,6 +15,7 @@ import static com.sekarre.helpcentercore.util.DateUtil.DATE_TIME_FORMAT;
 @AllArgsConstructor
 @ToString
 @Builder
+@EqualsAndHashCode
 public class CommentResponseDTO {
 
     private Long id;

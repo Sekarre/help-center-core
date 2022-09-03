@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +28,7 @@ import java.util.stream.Collectors;
 import static com.sekarre.helpcentercore.factories.StatusChangedCommentFactory.getStatusChangedComment;
 import static com.sekarre.helpcentercore.security.UserDetailsHelper.getCurrentUser;
 import static com.sekarre.helpcentercore.security.UserDetailsHelper.getCurrentUserFullName;
+import static com.sekarre.helpcentercore.util.DateUtil.getCurrentDateTime;
 import static com.sekarre.helpcentercore.util.DateUtil.getCurrentDateTimeFormatted;
 
 
@@ -58,7 +58,7 @@ public class CommentServiceImpl implements CommentService {
             comment.setReplyComment(getCommentById(commentCreateRequestDTO.getReplyCommentId()));
         }
         commentRepository.save(comment);
-        issue.setUpdatedAt(LocalDateTime.now());
+        issue.setUpdatedAt(getCurrentDateTime());
         issueRepository.save(issue);
         senNewCommentEventMessage(issueId, issue);
     }
@@ -84,21 +84,31 @@ public class CommentServiceImpl implements CommentService {
     public void createNewCommentWithStatusChanged(IssueStatusChangeDTO issueStatusChangeDTO, Issue issue) {
         Comment comment = null;
         if (Objects.nonNull(issueStatusChangeDTO.getComment()) && Objects.nonNull(issueStatusChangeDTO.getComment().getContent())) {
-            comment = getComment(issueStatusChangeDTO.getComment(), issue);
-            comment = commentRepository.save(comment);
-            senNewCommentEventMessage(issue.getId(), issue);
+            comment = createReplyCommentToDefaultStatusChangedComment(issueStatusChangeDTO, issue);
         }
         if (StringUtils.isNotBlank(issueStatusChangeDTO.getStatus())) {
-            Comment statusChangedComment = getComment(issueStatusChangeDTO.getComment(), issue);
-            IssueStatus issueStatus = IssueStatus.valueOf(issueStatusChangeDTO.getStatus());
-            statusChangedComment.setContent(getStatusChangedComment(issueStatus));
-            statusChangedComment.setIssueStatus(issueStatus);
-            if (Objects.nonNull(comment)) {
-                statusChangedComment.setReplyComment(comment);
-            }
-            commentRepository.save(statusChangedComment);
-            senNewCommentEventMessage(issue.getId(), issue);
+            createDefaultStatusChangedComment(issueStatusChangeDTO, issue, comment);
         }
+    }
+
+    private Comment createReplyCommentToDefaultStatusChangedComment(IssueStatusChangeDTO issueStatusChangeDTO, Issue issue) {
+        Comment comment;
+        comment = getComment(issueStatusChangeDTO.getComment(), issue);
+        comment = commentRepository.save(comment);
+        senNewCommentEventMessage(issue.getId(), issue);
+        return comment;
+    }
+
+    private void createDefaultStatusChangedComment(IssueStatusChangeDTO issueStatusChangeDTO, Issue issue, Comment comment) {
+        Comment statusChangedComment = getComment(issueStatusChangeDTO.getComment(), issue);
+        IssueStatus issueStatus = IssueStatus.valueOf(issueStatusChangeDTO.getStatus());
+        statusChangedComment.setContent(getStatusChangedComment(issueStatus));
+        statusChangedComment.setIssueStatus(issueStatus);
+        if (Objects.nonNull(comment)) {
+            statusChangedComment.setReplyComment(comment);
+        }
+        commentRepository.save(statusChangedComment);
+        senNewCommentEventMessage(issue.getId(), issue);
     }
 
     private Comment getComment(CommentCreateRequestDTO issueStatusChangeDTO, Issue issue) {

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @ToString
 @Builder
+@EqualsAndHashCode
 public class CommentCreateRequestDTO {
 
     @NotBlank
