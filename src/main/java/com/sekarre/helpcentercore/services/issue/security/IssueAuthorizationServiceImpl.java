@@ -1,10 +1,9 @@
-package com.sekarre.helpcentercore.services.security.impl;
+package com.sekarre.helpcentercore.services.issue.security;
 
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.exceptions.issue.IssueAuthorizationException;
 import com.sekarre.helpcentercore.exceptions.issue.IssueNotFoundException;
 import com.sekarre.helpcentercore.repositories.IssueRepository;
-import com.sekarre.helpcentercore.services.security.IssueAuthorizationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

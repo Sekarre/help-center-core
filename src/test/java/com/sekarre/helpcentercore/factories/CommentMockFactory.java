@@ -21,7 +21,7 @@ public class CommentMockFactory {
                 .build();
     }
 
-    public static Comment getCommentDTOMock() {
+    public static Comment getCommentMock() {
         return Comment.builder()
                 .id(1L)
                 .fullName("Full name")

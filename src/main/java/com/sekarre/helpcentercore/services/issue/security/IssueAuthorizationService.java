@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services.security;
+package com.sekarre.helpcentercore.services.issue.security;
 
 public interface IssueAuthorizationService {
 

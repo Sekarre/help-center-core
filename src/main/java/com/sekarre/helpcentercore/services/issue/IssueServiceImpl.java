@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services.impl;
+package com.sekarre.helpcentercore.services.issue;
 
 import com.sekarre.helpcentercore.DTO.*;
 import com.sekarre.helpcentercore.DTO.issue.GroupedByStatusIssueDTO;
@@ -16,10 +16,9 @@ import com.sekarre.helpcentercore.exceptions.issue.IssueNotFoundException;
 import com.sekarre.helpcentercore.mappers.IssueMapper;
 import com.sekarre.helpcentercore.repositories.IssueRepository;
 import com.sekarre.helpcentercore.repositories.IssueTypeRepository;
-import com.sekarre.helpcentercore.services.ChatService;
-import com.sekarre.helpcentercore.services.CommentService;
-import com.sekarre.helpcentercore.services.IssueService;
-import com.sekarre.helpcentercore.services.UserService;
+import com.sekarre.helpcentercore.services.chat.ChatService;
+import com.sekarre.helpcentercore.services.comment.CommentService;
+import com.sekarre.helpcentercore.services.user.UserService;
 import com.sekarre.helpcentercore.services.notification.NotificationSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

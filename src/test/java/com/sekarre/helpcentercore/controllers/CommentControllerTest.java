@@ -2,7 +2,7 @@ package com.sekarre.helpcentercore.controllers;
 
 import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;
 import com.sekarre.helpcentercore.DTO.comment.CommentResponseDTO;
-import com.sekarre.helpcentercore.services.CommentService;
+import com.sekarre.helpcentercore.services.comment.CommentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -16,7 +16,7 @@ import java.util.Collections;
 import static com.sekarre.helpcentercore.factories.CommentMockFactory.getCommentCreateRequestDTOMock;
 import static com.sekarre.helpcentercore.factories.CommentMockFactory.getCommentResponseDTOMock;
 import static com.sekarre.helpcentercore.util.DateUtil.getDateTimeFormatted;
-import static com.sekarre.helpcentercore.util.TestUtil.convertObjectToJsonBytes;
+import static com.sekarre.helpcentercore.testutil.TestUtil.convertObjectToJsonBytes;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

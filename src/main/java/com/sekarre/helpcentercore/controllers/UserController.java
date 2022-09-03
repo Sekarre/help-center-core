@@ -1,7 +1,7 @@
 package com.sekarre.helpcentercore.controllers;
 
 import com.sekarre.helpcentercore.DTO.UserDTO;
-import com.sekarre.helpcentercore.services.UserService;
+import com.sekarre.helpcentercore.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

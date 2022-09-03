@@ -1,11 +1,10 @@
-package com.sekarre.helpcentercore.services;
+package com.sekarre.helpcentercore.services.user;
 
 import com.sekarre.helpcentercore.DTO.UserDTO;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.domain.User;
 import com.sekarre.helpcentercore.mappers.UserMapper;
 import com.sekarre.helpcentercore.repositories.UserRepository;
-import com.sekarre.helpcentercore.services.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -23,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class UserServiceTest {
+class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
@@ -49,11 +48,11 @@ class UserServiceTest {
         when(userMapper.mapUserToUserDTO(any(User.class))).thenReturn(userDTO);
 
         //when
-        List<UserDTO> response = userService.getUsersByRoleName(roleName);
+        List<UserDTO> result = userService.getUsersByRoleName(roleName);
 
         //then
-        assertNotNull(response);
-        assertEquals(response.get(0), userDTO, "UserDTO is not equal to response UserDTO");
+        assertNotNull(result);
+        assertEquals(userDTO, result.get(0), "UserDTO is not equal to result UserDTO");
         verify(userRepository, times(1)).findAllByRoleName(roleName);
         verify(userMapper, times(1)).mapUserToUserDTO(user);
     }
@@ -69,11 +68,11 @@ class UserServiceTest {
         when(userMapper.mapUserToUserDTO(any(User.class))).thenReturn(userDTO);
 
         //when
-        List<UserDTO> response = userService.getUsersByRoleNameAndNotInIssue(roleName, issueId);
+        List<UserDTO> result = userService.getUsersByRoleNameAndNotInIssue(roleName, issueId);
 
         //then
-        assertNotNull(response);
-        assertEquals(response.get(0), userDTO, "UserDTO is not equal to response UserDTO");
+        assertNotNull(result);
+        assertEquals(userDTO, result.get(0), "UserDTO is not equal to result UserDTO");
         verify(userRepository, times(1)).findAllByRoleNameAndIssueIdNotEqual(roleName, issueId);
         verify(userMapper, times(1)).mapUserToUserDTO(user);
     }
@@ -87,11 +86,11 @@ class UserServiceTest {
         when(userRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(user));
 
         //when
-        User response = userService.getUserById(userId);
+        User result = userService.getUserById(userId);
 
         //then
-        assertNotNull(response);
-        assertEquals(response, user, "User is not equal to response User");
+        assertNotNull(result);
+        assertEquals(user, result, "User is not equal to result User");
         verify(userRepository, times(1)).findById(userId);
     }
 
@@ -104,11 +103,11 @@ class UserServiceTest {
         when(userMapper.mapUserToUserDTO(any(User.class))).thenReturn(userDTO);
 
         //when
-        List<UserDTO> response = userService.getParticipantsByIssue(issue);
+        List<UserDTO> result = userService.getParticipantsByIssue(issue);
 
         //then
-        assertNotNull(response);
-        assertEquals(response.get(0), userDTO, "UserDTO is not equal to response UserDTO");
+        assertNotNull(result);
+        assertEquals(userDTO, result.get(0), "UserDTO is not equal to result UserDTO");
         verify(userMapper, times(1)).mapUserToUserDTO(issue.getParticipants().toArray(new User[]{})[0]);
     }
 
@@ -120,11 +119,11 @@ class UserServiceTest {
         when(userRepository.findUsersWithLeastIssuesAndMatchingSpecialization()).thenReturn(Optional.ofNullable(user));
 
         //when
-        User response = userService.getAvailableSupportUser();
+        User result = userService.getAvailableSupportUser();
 
         //then
-        assertNotNull(response);
-        assertEquals(response, user, "User is not equal to response User");
+        assertNotNull(result);
+        assertEquals(user, result, "User is not equal to result User");
         verify(userRepository, times(1)).findUsersWithLeastIssuesAndMatchingSpecialization();
     }
 }

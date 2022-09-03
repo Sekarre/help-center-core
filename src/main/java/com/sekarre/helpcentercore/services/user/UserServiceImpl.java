@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services.impl;
+package com.sekarre.helpcentercore.services.user;
 
 import com.sekarre.helpcentercore.DTO.UserDTO;
 import com.sekarre.helpcentercore.domain.Issue;
@@ -6,7 +6,6 @@ import com.sekarre.helpcentercore.domain.User;
 import com.sekarre.helpcentercore.exceptions.user.UserNotFoundException;
 import com.sekarre.helpcentercore.mappers.UserMapper;
 import com.sekarre.helpcentercore.repositories.UserRepository;
-import com.sekarre.helpcentercore.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

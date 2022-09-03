@@ -1,10 +1,9 @@
-package com.sekarre.helpcentercore.services.security;
+package com.sekarre.helpcentercore.services.issue.security;
 
 import com.sekarre.helpcentercore.SecurityContextMockSetup;
 import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.exceptions.issue.IssueAuthorizationException;
 import com.sekarre.helpcentercore.repositories.IssueRepository;
-import com.sekarre.helpcentercore.services.security.impl.IssueAuthorizationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -43,10 +42,10 @@ class IssueAuthorizationServiceTest extends SecurityContextMockSetup {
         when(issueRepository.findByIdWithParticipantsAndAuthor(any(Long.class))).thenReturn(Optional.of(issue));
 
         //when
-        boolean response = issueAuthorizationService.checkIfUserAuthorizedToIssue(issueId);
+        boolean result = issueAuthorizationService.checkIfUserAuthorizedToIssue(issueId);
 
         //then
-        assertTrue(response);
+        assertTrue(result);
         verify(issueRepository, times(1)).findByIdWithParticipantsAndAuthor(issueId);
     }
 
@@ -69,13 +68,13 @@ class IssueAuthorizationServiceTest extends SecurityContextMockSetup {
         //given
         final Issue issue = getIssueMock();
         issue.addParticipant(getCurrentUserMock());
-        when(issueRepository.findByIdWithParticipantsAndAuthor(any(Long.class))).thenReturn(Optional.ofNullable(issue));
+        when(issueRepository.findByIdWithParticipantsAndAuthor(any(Long.class))).thenReturn(Optional.of(issue));
 
         //when
-        boolean response = issueAuthorizationService.checkIfUserAuthorizedToIssue(issueId);
+        boolean result = issueAuthorizationService.checkIfUserAuthorizedToIssue(issueId);
 
         //then
-        assertTrue(response);
+        assertTrue(result);
         verify(issueRepository, times(1)).findByIdWithParticipantsAndAuthor(issueId);
     }
 
@@ -84,7 +83,7 @@ class IssueAuthorizationServiceTest extends SecurityContextMockSetup {
         //given
         final Issue issue = getIssueMock();
         issue.setParticipants(new HashSet<>());
-        when(issueRepository.findByIdWithParticipantsAndAuthor(any(Long.class))).thenReturn(Optional.ofNullable(issue));
+        when(issueRepository.findByIdWithParticipantsAndAuthor(any(Long.class))).thenReturn(Optional.of(issue));
 
         //when
         assertThrows(IssueAuthorizationException.class, () -> issueAuthorizationService.checkIfUserAuthorizedToIssue(issueId));

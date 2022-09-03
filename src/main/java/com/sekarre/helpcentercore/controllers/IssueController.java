@@ -8,7 +8,7 @@ import com.sekarre.helpcentercore.DTO.issue.IssueTypeDTO;
 import com.sekarre.helpcentercore.domain.enums.IssueStatus;
 import com.sekarre.helpcentercore.security.perms.AdminPermission;
 import com.sekarre.helpcentercore.security.perms.IssuePermission;
-import com.sekarre.helpcentercore.services.IssueService;
+import com.sekarre.helpcentercore.services.issue.IssueService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

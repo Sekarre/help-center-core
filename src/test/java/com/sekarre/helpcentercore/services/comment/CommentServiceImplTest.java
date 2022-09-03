@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services;
+package com.sekarre.helpcentercore.services.comment;
 
 import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;
 import com.sekarre.helpcentercore.DTO.comment.CommentResponseDTO;
@@ -10,7 +10,6 @@ import com.sekarre.helpcentercore.domain.Issue;
 import com.sekarre.helpcentercore.mappers.CommentMapper;
 import com.sekarre.helpcentercore.repositories.CommentRepository;
 import com.sekarre.helpcentercore.repositories.IssueRepository;
-import com.sekarre.helpcentercore.services.impl.CommentServiceImpl;
 import com.sekarre.helpcentercore.services.notification.NotificationSender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class CommentServiceTest extends SecurityContextMockSetup {
+class CommentServiceImplTest extends SecurityContextMockSetup {
 
     @Mock
     private CommentRepository commentRepository;
@@ -53,17 +52,17 @@ class CommentServiceTest extends SecurityContextMockSetup {
     void should_return_all_issue_comments() {
         //given
         final Long issueId = 1L;
-        final Comment comment = getCommentDTOMock();
+        final Comment comment = getCommentMock();
         final CommentResponseDTO commentResponseDTO = getCommentResponseDTOMock();
         when(commentRepository.findAllByIssueId(any(Long.class))).thenReturn(Collections.singletonList(comment));
         when(commentMapper.mapCommentToCommentDTO(any(Comment.class))).thenReturn(commentResponseDTO);
 
         //when
-        List<CommentResponseDTO> response = commentService.getAllIssueComments(issueId);
+        List<CommentResponseDTO> result = commentService.getAllIssueComments(issueId);
 
         //then
-        assertNotNull(response);
-        assertEquals(response.get(0), commentResponseDTO, "CommentResponseDTO is not equal to response CommentResponseDTO");
+        assertNotNull(result);
+        assertEquals(result.get(0), commentResponseDTO, "CommentResponseDTO is not equal to result CommentResponseDTO");
         verify(commentRepository, times(1)).findAllByIssueId(issueId);
         verify(commentMapper, times(1)).mapCommentToCommentDTO(comment);
     }
@@ -73,7 +72,7 @@ class CommentServiceTest extends SecurityContextMockSetup {
         //given
         final Long issueId = 1L;
         final Long replyCommentId = 1L;
-        final Comment comment = getCommentDTOMock();
+        final Comment comment = getCommentMock();
         final Issue issue = getIssueMock();
         final CommentCreateRequestDTO commentCreateRequestDTO = getCommentCreateRequestDTOMock();
         commentCreateRequestDTO.setReplyCommentId(replyCommentId);
@@ -98,7 +97,7 @@ class CommentServiceTest extends SecurityContextMockSetup {
     void should_create_new_comment_WITHOUT_reply_comment() {
         //given
         final Long issueId = 1L;
-        final Comment comment = getCommentDTOMock();
+        final Comment comment = getCommentMock();
         final Issue issue = getIssueMock();
         final CommentCreateRequestDTO commentCreateRequestDTO = getCommentCreateRequestDTOMock();
         commentCreateRequestDTO.setReplyCommentId(null);
@@ -126,7 +125,7 @@ class CommentServiceTest extends SecurityContextMockSetup {
         final IssueStatusChangeDTO issueStatusChangeDTO = getIssueStatusChangeDTOMock();
         final CommentCreateRequestDTO commentCreateRequestDTO = getCommentCreateRequestDTOMock();
         issueStatusChangeDTO.setStatus("");
-        final Comment comment = getCommentDTOMock();
+        final Comment comment = getCommentMock();
         when(commentMapper.mapCommentCreateRequestDTOToComment(any(CommentCreateRequestDTO.class))).thenReturn(comment);
 
         //when
@@ -144,7 +143,7 @@ class CommentServiceTest extends SecurityContextMockSetup {
         final Issue issue = getIssueMock();
         final IssueStatusChangeDTO issueStatusChangeDTO = getIssueStatusChangeDTOMock();
         final CommentCreateRequestDTO commentCreateRequestDTO = getCommentCreateRequestDTOMock();
-        final Comment comment = getCommentDTOMock();
+        final Comment comment = getCommentMock();
         when(commentMapper.mapCommentCreateRequestDTOToComment(any(CommentCreateRequestDTO.class))).thenReturn(comment);
 
         //when

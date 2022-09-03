@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services;
+package com.sekarre.helpcentercore.services.chat;
 
 import com.sekarre.helpcentercore.DTO.chat.ChatCreateRequestDTO;
 import com.sekarre.helpcentercore.DTO.chat.ChatInfoDTO;
@@ -8,7 +8,6 @@ import com.sekarre.helpcentercore.domain.Chat;
 import com.sekarre.helpcentercore.domain.User;
 import com.sekarre.helpcentercore.feignclients.ChatFeignClient;
 import com.sekarre.helpcentercore.mappers.ChatMapper;
-import com.sekarre.helpcentercore.services.impl.ChatServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -22,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class ChatServiceTest extends SecurityContextMockSetup {
+class ChatServiceImplTest extends SecurityContextMockSetup {
 
     @Mock
     private ChatFeignClient chatFeignClient;
@@ -47,15 +46,15 @@ class ChatServiceTest extends SecurityContextMockSetup {
         final User supportUser = getDefaultUserMock();
         final ChatCreateRequestDTO chatCreateRequestDTO = getChatCreateRequestDTOMock(issueDTO, supportUser);
         when(chatFeignClient.createNewChat(any(ChatCreateRequestDTO.class))).thenReturn(chatInfoDTO);
-        when(chatMapper.mapChatInfoDtoToChat(any(ChatInfoDTO.class))).thenReturn(chat);
+        when(chatMapper.mapChatInfoDTOToChat(any(ChatInfoDTO.class))).thenReturn(chat);
 
         //when
-        Chat response = chatService.getChat(issueDTO, supportUser);
+        Chat result = chatService.getChat(issueDTO, supportUser);
 
         //then
-        assertNotNull(response);
-        assertEquals(response, chat, "Chat is not equal to response Chat");
+        assertNotNull(result);
+        assertEquals(result, chat, "Chat is not equal to result Chat");
         verify(chatFeignClient, times(1)).createNewChat(chatCreateRequestDTO);
-        verify(chatMapper, times(1)).mapChatInfoDtoToChat(chatInfoDTO);
+        verify(chatMapper, times(1)).mapChatInfoDTOToChat(chatInfoDTO);
     }
 }

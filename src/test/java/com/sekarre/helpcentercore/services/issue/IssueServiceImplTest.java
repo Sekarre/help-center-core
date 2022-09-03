@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services;
+package com.sekarre.helpcentercore.services.issue;
 
 import com.sekarre.helpcentercore.DTO.UserDTO;
 import com.sekarre.helpcentercore.DTO.issue.GroupedByStatusIssueDTO;
@@ -13,8 +13,10 @@ import com.sekarre.helpcentercore.domain.enums.RoleName;
 import com.sekarre.helpcentercore.mappers.IssueMapper;
 import com.sekarre.helpcentercore.repositories.IssueRepository;
 import com.sekarre.helpcentercore.repositories.IssueTypeRepository;
-import com.sekarre.helpcentercore.services.impl.IssueServiceImpl;
+import com.sekarre.helpcentercore.services.chat.ChatService;
+import com.sekarre.helpcentercore.services.comment.CommentService;
 import com.sekarre.helpcentercore.services.notification.NotificationSender;
+import com.sekarre.helpcentercore.services.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -30,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class IssueServiceTest extends SecurityContextMockSetup {
+class IssueServiceImplTest extends SecurityContextMockSetup {
 
     @Mock
     private IssueRepository issueRepository;
@@ -66,11 +68,11 @@ class IssueServiceTest extends SecurityContextMockSetup {
         when(issueMapper.mapIssueTypeToIssueTypeDTO(any(IssueType.class))).thenReturn(issueTypeDTO);
 
         //when
-        List<IssueTypeDTO> response = issueService.getAllIssueTypes();
+        List<IssueTypeDTO> result = issueService.getAllIssueTypes();
 
         //then
-        assertNotNull(response);
-        assertEquals(response.get(0), issueTypeDTO, "IssueTypeDTO is not equal to response IssueType");
+        assertNotNull(result);
+        assertEquals(issueTypeDTO, result.get(0), "IssueTypeDTO is not equal to result IssueType");
         verify(issueTypeRepository, times(1)).findAll();
         verify(issueMapper, times(1)).mapIssueTypeToIssueTypeDTO(issueType);
     }
@@ -81,11 +83,11 @@ class IssueServiceTest extends SecurityContextMockSetup {
         final List<String> issueStatuses = Arrays.stream(IssueStatus.values()).map(Objects::toString).toList();
 
         //when
-        List<String> response = issueService.getIssueStatuses();
+        List<String> result = issueService.getIssueStatuses();
 
         //then
-        assertNotNull(response);
-        assertEquals(response, issueStatuses, "IssueStatus is not equal to response IssueStatus");
+        assertNotNull(result);
+        assertEquals(result, issueStatuses, "IssueStatus is not equal to result IssueStatus");
     }
 
     @Test
@@ -163,11 +165,11 @@ class IssueServiceTest extends SecurityContextMockSetup {
         when(userService.getParticipantsByIssue(any(Issue.class))).thenReturn(Collections.singletonList(userDTO));
 
         //when
-        List<UserDTO> response = issueService.getIssueParticipants(issueId);
+        List<UserDTO> result = issueService.getIssueParticipants(issueId);
 
         //then
-        assertNotNull(response);
-        assertEquals(response.get(0), userDTO, "UserDTO is not equal to response UserDTO");
+        assertNotNull(result);
+        assertEquals(userDTO, result.get(0), "UserDTO is not equal to result UserDTO");
         verify(userService, times(1)).getParticipantsByIssue(issue);
         verify(issueRepository, times(1)).findById(issueId);
     }
@@ -182,11 +184,11 @@ class IssueServiceTest extends SecurityContextMockSetup {
         when(issueMapper.mapIssueToIssueDTO(any(Issue.class))).thenReturn(issueDTO);
 
         //when
-        List<IssueDTO> response = issueService.getAllIssuesWithStatus(null);
+        List<IssueDTO> result = issueService.getAllIssuesWithStatus(null);
 
         //then
-        assertNotNull(response);
-        assertEquals(response.get(0), issueDTO, "IssueDTO is not equal to response IssueDTO");
+        assertNotNull(result);
+        assertEquals(issueDTO, result.get(0), "IssueDTO is not equal to result IssueDTO");
         verify(issueRepository, times(1)).findAll();
         verify(issueMapper, times(1)).mapIssueToIssueDTO(issue);
     }
@@ -203,11 +205,11 @@ class IssueServiceTest extends SecurityContextMockSetup {
         when(issueMapper.mapIssueToIssueDTO(any(Issue.class))).thenReturn(issueDTO);
 
         //when
-        List<IssueDTO> response = issueService.getAllIssuesWithStatus(issueStatus);
+        List<IssueDTO> result = issueService.getAllIssuesWithStatus(issueStatus);
 
         //then
-        assertNotNull(response);
-        assertEquals(response.get(0), issueDTO, "IssueDTO is not equal to response IssueDTO");
+        assertNotNull(result);
+        assertEquals(issueDTO, result.get(0), "IssueDTO is not equal to result IssueDTO");
         verify(issueRepository, times(1)).findAllByIssueStatusAndParticipantsContaining(issueStatus, user);
         verify(issueMapper, times(1)).mapIssueToIssueDTO(issue);
     }
@@ -223,11 +225,11 @@ class IssueServiceTest extends SecurityContextMockSetup {
         when(issueMapper.mapIssueToIssueDTO(any(Issue.class))).thenReturn(issueDTO);
 
         //when
-        List<IssueDTO> response = issueService.getAllIssuesWithStatus(null);
+        List<IssueDTO> result = issueService.getAllIssuesWithStatus(null);
 
         //then
-        assertNotNull(response);
-        assertEquals(response.get(0), issueDTO, "IssueDTO is not equal to response IssueDTO");
+        assertNotNull(result);
+        assertEquals(issueDTO, result.get(0), "IssueDTO is not equal to result IssueDTO");
         verify(issueRepository, times(1)).findAllByParticipantsContaining(user);
         verify(issueMapper, times(1)).mapIssueToIssueDTO(issue);
     }
@@ -244,10 +246,10 @@ class IssueServiceTest extends SecurityContextMockSetup {
         when(issueMapper.mapIssueToIssueDTO(any(Issue.class))).thenReturn(issueDTO);
 
         //when
-        GroupedByStatusIssueDTO response = issueService.getAllIssuesGrouped();
+        GroupedByStatusIssueDTO result = issueService.getAllIssuesGrouped();
 
         //then
-        assertNotNull(response);
+        assertNotNull(result);
         verify(issueRepository, times(1)).findAll();
         verify(issueMapper, times(1)).mapIssueToIssueDTO(issue);
     }
@@ -263,10 +265,10 @@ class IssueServiceTest extends SecurityContextMockSetup {
         when(issueMapper.mapIssueToIssueDTO(any(Issue.class))).thenReturn(issueDTO);
 
         //when
-        GroupedByStatusIssueDTO response = issueService.getAllIssuesGrouped();
+        GroupedByStatusIssueDTO result = issueService.getAllIssuesGrouped();
 
         //then
-        assertNotNull(response);
+        assertNotNull(result);
         verify(issueRepository, times(1)).findAllByParticipantsContaining(user);
         verify(issueMapper, times(1)).mapIssueToIssueDTO(issue);
     }
@@ -281,11 +283,11 @@ class IssueServiceTest extends SecurityContextMockSetup {
         when(issueMapper.mapIssueToIssueDTO(any(Issue.class))).thenReturn(issueDTO);
 
         //when
-        IssueDTO response = issueService.getIssueById(issueId);
+        IssueDTO result = issueService.getIssueById(issueId);
 
         //then
-        assertNotNull(response);
-        assertEquals(response, issueDTO, "IssueDTO is not equal to response IssueDTO");
+        assertNotNull(result);
+        assertEquals(issueDTO, result, "IssueDTO is not equal to result IssueDTO");
         verify(issueRepository, times(1)).findById(issueId);
         verify(issueMapper, times(1)).mapIssueToIssueDTO(issue);
     }
@@ -298,11 +300,11 @@ class IssueServiceTest extends SecurityContextMockSetup {
         when(issueRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(issue));
 
         //when
-        Issue response = issueService.getIssueEntityById(issueId);
+        Issue result = issueService.getIssueEntityById(issueId);
 
         //then
-        assertNotNull(response);
-        assertEquals(response, issue, "Issue is not equal to response Issue");
+        assertNotNull(result);
+        assertEquals(issue, result, "Issue is not equal to result Issue");
         verify(issueRepository, times(1)).findById(issueId);
     }
 

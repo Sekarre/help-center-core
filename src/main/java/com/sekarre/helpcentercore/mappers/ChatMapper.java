@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 @Mapper(builder = @Builder(disableBuilder = true))
 public abstract class ChatMapper {
 
-    public abstract Chat mapChatInfoDtoToChat(ChatInfoDTO chatInfoDTO);
+    public abstract Chat mapChatInfoDTOToChat(ChatInfoDTO chatInfoDTO);
 }

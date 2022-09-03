@@ -3,7 +3,7 @@ package com.sekarre.helpcentercore.controllers;
 import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;
 import com.sekarre.helpcentercore.DTO.comment.CommentResponseDTO;
 import com.sekarre.helpcentercore.security.perms.CommentPermission;
-import com.sekarre.helpcentercore.services.CommentService;
+import com.sekarre.helpcentercore.services.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.sekarre.helpcentercore.controllers;
 
 import com.sekarre.helpcentercore.DTO.UserDTO;
-import com.sekarre.helpcentercore.services.UserService;
+import com.sekarre.helpcentercore.services.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

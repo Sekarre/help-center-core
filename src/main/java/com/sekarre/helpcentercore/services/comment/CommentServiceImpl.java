@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services.impl;
+package com.sekarre.helpcentercore.services.comment;
 
 import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;
 import com.sekarre.helpcentercore.DTO.comment.CommentResponseDTO;
@@ -13,7 +13,6 @@ import com.sekarre.helpcentercore.exceptions.issue.IssueNotFoundException;
 import com.sekarre.helpcentercore.mappers.CommentMapper;
 import com.sekarre.helpcentercore.repositories.CommentRepository;
 import com.sekarre.helpcentercore.repositories.IssueRepository;
-import com.sekarre.helpcentercore.services.CommentService;
 import com.sekarre.helpcentercore.services.notification.NotificationSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -111,8 +110,8 @@ public class CommentServiceImpl implements CommentService {
         senNewCommentEventMessage(issue.getId(), issue);
     }
 
-    private Comment getComment(CommentCreateRequestDTO issueStatusChangeDTO, Issue issue) {
-        Comment comment = commentMapper.mapCommentCreateRequestDTOToComment(issueStatusChangeDTO);
+    private Comment getComment(CommentCreateRequestDTO commentCreateRequestDTO, Issue issue) {
+        Comment comment = commentMapper.mapCommentCreateRequestDTOToComment(commentCreateRequestDTO);
         comment.setIssue(issue);
         comment.setFullName(getCurrentUserFullName());
         return comment;

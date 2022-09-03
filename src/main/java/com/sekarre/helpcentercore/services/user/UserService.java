@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services;
+package com.sekarre.helpcentercore.services.user;
 
 
 import com.sekarre.helpcentercore.DTO.UserDTO;

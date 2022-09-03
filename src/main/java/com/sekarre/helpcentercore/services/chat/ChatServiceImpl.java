@@ -1,11 +1,10 @@
-package com.sekarre.helpcentercore.services.impl;
+package com.sekarre.helpcentercore.services.chat;
 
 import com.sekarre.helpcentercore.DTO.chat.ChatCreateRequestDTO;
 import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
 import com.sekarre.helpcentercore.domain.Chat;
 import com.sekarre.helpcentercore.domain.User;
 import com.sekarre.helpcentercore.mappers.ChatMapper;
-import com.sekarre.helpcentercore.services.ChatService;
 import com.sekarre.helpcentercore.feignclients.ChatFeignClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public Chat getChat(IssueDTO issueDTO, User supportUser) {
-        return chatMapper.mapChatInfoDtoToChat(chatFeignClient.createNewChat(
+        return chatMapper.mapChatInfoDTOToChat(chatFeignClient.createNewChat(
                 ChatCreateRequestDTO.builder()
                         .channelName(issueDTO.getTitle())
                         .usersId(Stream.of(getCurrentUser(), supportUser).map(User::getId).toArray(Long[]::new))

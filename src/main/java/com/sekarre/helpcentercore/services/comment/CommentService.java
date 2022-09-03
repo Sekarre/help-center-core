@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services;
+package com.sekarre.helpcentercore.services.comment;
 
 
 import com.sekarre.helpcentercore.DTO.comment.CommentCreateRequestDTO;

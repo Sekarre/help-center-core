@@ -1,4 +1,4 @@
-package com.sekarre.helpcentercore.services;
+package com.sekarre.helpcentercore.services.chat;
 
 import com.sekarre.helpcentercore.DTO.issue.IssueDTO;
 import com.sekarre.helpcentercore.domain.Chat;
