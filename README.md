@@ -1,5 +1,5 @@
-# Help center chat
-Service responsible for issues and comments management, sending notification about new comments
+# Help center core
+Service responsible for issues and comments management, sending notification about new comments via RabbitMQ.
 ## Technologies
 - Java 17
 - Spring Framework 5
