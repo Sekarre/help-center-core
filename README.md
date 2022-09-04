@@ -9,7 +9,7 @@ Service responsible for issues and comments management, sending notification abo
   - Spring MVC 
   - Spring Cloud
   - Spring AMQP
-- WebSockets
+- OpenFeign
 - RabbitMQ
 - JUnit 5
 - Maven
